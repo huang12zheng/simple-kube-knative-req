@@ -1,0 +1,18 @@
+[package]
+authors = [
+  "hz <805104533@qq.com>",
+]
+edition = "2021"
+name = "simple-kube-knative-req"
+version = "0.1.0"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+# [features]
+# latest = ["k8s-openapi/v1_24"]
+
+[dependencies]
+anyhow = "^1.0.58"
+k8s-openapi = {version = "0.15.0", features = ["v1_24"]}
+kube = {version = "^0.74.0", features = ["runtime", "derive"]}
+serde_json = "^1.0.82"
+tokio = {version = "^1.19.2", features = ["full"]}
