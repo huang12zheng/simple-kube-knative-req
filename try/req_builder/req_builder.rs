@@ -41,26 +41,24 @@ impl ReqBuilder {
     }
 
     pub async fn set_ar(&mut self) -> &mut Self {
-        // let client = self.client.clone().unwrap();
-        let client = self.client.clone().unwrap();
-        let gvk = self.gvk.clone().unwrap();
-        let (ar, _) = discovery::pinned_kind(&client, &gvk).await.unwrap();
+        let client = self.client.as_ref().unwrap();
+        let gvk = self.gvk.as_ref().unwrap();
+        let (ar, _) = discovery::pinned_kind(client, gvk).await.unwrap();
         self.ar = Some(ar);
         self
     }
 
     pub fn build(&self) -> Req {
         Req {
-            client: self.client.clone().unwrap(),
-            // gvk: self.gvk.clone().unwrap(),
-            ar: self.ar.clone().unwrap(),
+            client: self.client.to_owned().unwrap(),
+            ar: self.ar.to_owned().unwrap(),
         }
     }
 }
 
 impl Into<Api<DynamicObject>> for Req {
     fn into(self) -> Api<DynamicObject> {
-        let api = Api::<DynamicObject>::default_namespaced_with(self.client.clone(), &self.ar);
+        let api = Api::<DynamicObject>::default_namespaced_with(self.client.to_owned(), &self.ar);
         api
     }
 }
