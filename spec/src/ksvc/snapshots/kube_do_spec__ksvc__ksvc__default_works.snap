@@ -1,0 +1,13 @@
+---
+source: spec/src/ksvc/ksvc.rs
+expression: spec
+---
+KnativeSpec {
+    group: "serving.knative.dev",
+    version: "",
+    kind: "Service",
+    container_name: "my-coder",
+    svc_image: "hzgood/my-coder",
+    port: "8080",
+    env: "",
+}

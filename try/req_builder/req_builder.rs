@@ -1,5 +1,6 @@
 mod client;
 mod gvk;
+// mod ksvc;
 
 #[allow(unused_imports)]
 use client::CLIENT;
@@ -79,9 +80,10 @@ async fn test() {
 
     println!("{:?}", api);
     let str = format!("{:?}", api);
-    // let expect_str = "Api { request: Request { url_path: \"/apis/serving.knative.dev/v1/namespaces/default/services\" }, client: \"...\", namespace: Some(\"default\") }";
     let expect_str = r#"Api { request: Request { url_path: "/apis/serving.knative.dev/v1/namespaces/default/services" }, client: "...", namespace: Some("default") }"#;
     assert_eq!(str, expect_str);
+
+    let ksvc = KnativeSpec::default().ksvc();
 }
 
 fn main() {}
