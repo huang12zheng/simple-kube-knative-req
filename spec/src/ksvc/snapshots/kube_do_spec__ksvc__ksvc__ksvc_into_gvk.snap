@@ -4,6 +4,6 @@ expression: gvk
 ---
 GVKSpec {
     group: "serving.knative.dev",
-    version: "",
+    version: "v1",
     kind: "Service",
 }

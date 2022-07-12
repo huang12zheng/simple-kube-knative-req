@@ -20,7 +20,7 @@ pub struct KnativeSpec {
     #[educe(Default = "serving.knative.dev")]
     pub group: String,
     /// source from [GVKSpec::version]
-    #[envconfig(from = "VERSION", default = "")]
+    #[envconfig(from = "VERSION", default = "v1")]
     pub version: String,
     #[envconfig(from = "KIND", default = "Service")]
     #[educe(Default = "Service")]

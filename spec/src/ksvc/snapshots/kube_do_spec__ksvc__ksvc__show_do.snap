@@ -5,7 +5,7 @@ expression: ksvc
 DynamicObject {
     types: Some(
         TypeMeta {
-            api_version: "serving.knative.dev",
+            api_version: "serving.knative.dev/v1",
             kind: "Service",
         },
     ),
