@@ -1,0 +1,15 @@
+---
+source: spec/tests/get_apit_feature.rs
+expression: wrapper
+---
+KnativeSpecWrapper(
+    KnativeSpec {
+        group: "serving.knative.dev",
+        version: "v1",
+        kind: "Service",
+        container_name: "my-coder",
+        svc_image: "alpine",
+        port: "8081",
+        env: "",
+    },
+)

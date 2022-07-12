@@ -1,0 +1,13 @@
+---
+source: spec/tests/get_apit_feature.rs
+expression: api
+---
+Api {
+    request: Request {
+        url_path: "/apis/serving.knative.dev/v1/namespaces/default/services",
+    },
+    client: "...",
+    namespace: Some(
+        "default",
+    ),
+}

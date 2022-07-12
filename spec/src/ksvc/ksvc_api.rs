@@ -120,18 +120,16 @@ impl KnativeSpecIntoApi for KnativeSpecWrapper {
     }
 }
 
+#[cfg(test)]
 #[tokio::test]
 async fn show_ar() {
     use envconfig::Envconfig;
-    let client: Client = CLIENT.get().await.clone();
     let gvk: GroupVersionKind = crate::gvk::GVKSpec::init_from_env().unwrap().into();
 
-    let (ar, _) = kube::discovery::pinned_kind(&client, &gvk).await.unwrap();
-    insta::assert_debug_snapshot!(ar);
     let ar = ApiResource::from_gvk(&gvk);
     insta::assert_debug_snapshot!(ar);
 }
-
+#[cfg(test)]
 #[tokio::test]
 async fn show_api() {
     use envconfig::Envconfig;
