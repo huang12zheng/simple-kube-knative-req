@@ -3,6 +3,9 @@ edition = "2021"
 name = "kube-do-spec"
 version = "0.1.0"
 
+[package.metadata.docs.rs]
+cargo-args = ["-Zunstable-options", "-Zrustdoc-scrape-examples=examples"]
+
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]

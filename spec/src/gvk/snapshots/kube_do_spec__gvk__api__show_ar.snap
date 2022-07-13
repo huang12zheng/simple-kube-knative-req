@@ -1,0 +1,12 @@
+---
+source: spec/src/gvk/api.rs
+assertion_line: 94
+expression: ar
+---
+ApiResource {
+    group: "serving.knative.dev",
+    version: "v1",
+    api_version: "serving.knative.dev/v1",
+    kind: "Service",
+    plural: "services",
+}

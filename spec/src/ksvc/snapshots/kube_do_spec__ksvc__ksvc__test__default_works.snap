@@ -1,14 +1,14 @@
 ---
-source: spec/tests/get_apit_feature.rs
-assertion_line: 55
-expression: knative_spec
+source: spec/src/ksvc/ksvc.rs
+assertion_line: 152
+expression: spec
 ---
 KnativeSpec {
     group: "serving.knative.dev",
     version: "v1",
     kind: "Service",
     container_name: "my-coder",
-    svc_image: "alpine",
-    port: "8081",
+    svc_image: "hzgood/my-coder",
+    port: "8080",
     env: "",
 }

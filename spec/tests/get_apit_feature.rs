@@ -5,12 +5,12 @@ use async_trait::async_trait;
 use cucumber::{gherkin::Step, given, then, World, WorldInit};
 use envconfig::Envconfig;
 use insta::assert_debug_snapshot;
-use kube_do_spec::ksvc::ksvc::KnativeSpec;
-use kube_do_spec::ksvc::ksvc_api::{KnativeSpecIntoApi, KnativeSpecWrapper};
+// use kube_do_spec::ksvc::ksvc_api::{KnativeSpecIntoApi, KnativeSpec};
+use kube_do_spec::{ksvc::KnativeSpec, GetApi};
 
 #[derive(Debug, WorldInit)]
 struct ApiWorld {
-    knative_wrapper: KnativeSpecWrapper,
+    knative_spec: KnativeSpec,
     insta_label: String,
 }
 
@@ -20,7 +20,7 @@ impl World for ApiWorld {
 
     async fn new() -> Result<Self, Self::Error> {
         Ok(ApiWorld {
-            knative_wrapper: KnativeSpecWrapper(KnativeSpec::default()),
+            knative_spec: KnativeSpec::default(),
             insta_label: "label".to_owned(),
         })
     }
@@ -39,22 +39,22 @@ fn port_and_image(w: &mut ApiWorld, step: &Step) {
 
             std::env::set_var("PORT", port);
             std::env::set_var("IMAGE", image);
-            w.knative_wrapper = KnativeSpecWrapper(KnativeSpec::init_from_env().unwrap());
+            w.knative_spec = KnativeSpec::init_from_env().unwrap();
             w.insta_label = format!("{}-{}", port, image);
         }
     }
 }
 
-// !error from let wrapper = KnativeSpecWrapper(&w.knative_spec.clone());
-// !use let wrapper = &w.knative_wrapper; and World{knative_wrapper: KnativeSpecWrapper,}
+// !error from let wrapper = KnativeSpec(&w.knative_spec.clone());
+// !use let wrapper = &w.knative_wrapper; and World{knative_wrapper: KnativeSpec,}
 
 #[then(expr = "I get api")]
 async fn show_api(w: &mut ApiWorld) {
-    let wrapper = &w.knative_wrapper;
+    let knative_spec = &w.knative_spec;
     insta_util::set_snapshot_suffix!("{}", w.insta_label);
-    assert_debug_snapshot!(wrapper);
+    assert_debug_snapshot!(knative_spec);
 
-    let api = wrapper.get_api().await;
+    let api = knative_spec.get_api().await;
     assert_debug_snapshot!(api);
 }
 

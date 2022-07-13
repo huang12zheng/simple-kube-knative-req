@@ -5,7 +5,7 @@
 //!
 //! Detail of Spec:
 //!
-//! - [GVKSpec](gvk::GVKSpec)
+//! - [GVKSpec](gvk::gvk_spec::GVKSpec)
 //! - [KnativeSpec](ksvc)
 //!
 //! # Usage
@@ -17,10 +17,7 @@
 //! ```
 //! # Example
 //!
-//! ```rust
-// #![doc = include_str!("../examples/doc.rs")]
-#![doc = include_str!("../tests/gvk_doc.rs")]
-//! ```
+//! - [get_default_api](gvk::api::GVKSpecWrapper::get_default_api)
 //!
 //! # LOOK ALSO
 //!
@@ -32,15 +29,21 @@
 
 #[macro_use]
 extern crate educe;
+use kube::{
+    api::{ApiResource, DynamicObject, GroupVersionKind},
+    Api, Client,
+};
+
+use async_trait::async_trait;
+use envconfig::Envconfig;
+use serde_json::json;
 
 pub mod gvk;
+pub use gvk::*;
 pub mod ksvc;
-// mod ksvc;
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn it_works() {
-        let result = 2 + 2;
-        assert_eq!(result, 4);
-    }
+pub use ksvc::*;
+
+trait IntoDynamicObject {
+    fn gv(&self) -> String;
+    fn into_do(&self) -> kube::api::DynamicObject;
 }

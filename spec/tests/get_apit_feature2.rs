@@ -4,7 +4,7 @@
 //     gvk::GVKSpec,
 //     ksvc::{
 //         ksvc::KnativeSpec,
-//         ksvc_api::{KnativeSpecIntoApi, KnativeSpecWrapper},
+//         ksvc_api::{KnativeSpecIntoApi, KnativeSpec},
 //     },
 // };
 
@@ -14,7 +14,7 @@
 //     // show_api(ApiWorld());
 //     // let mut w = ApiWorld::new().await.unwrap();
 //     // let wrapper = &w.knative_wrapper;
-//     // let wrapper = KnativeSpecWrapper(KnativeSpec::default());
+//     // let wrapper = KnativeSpec::default());
 //     // // assert_debug_snapshot!(wrapper);
 //     // let api = wrapper.get_api().await;
 //     // let client = Client::try_default().await?;

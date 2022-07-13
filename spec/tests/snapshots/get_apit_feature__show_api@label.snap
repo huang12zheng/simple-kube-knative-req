@@ -1,15 +1,14 @@
 ---
 source: spec/tests/get_apit_feature.rs
-expression: wrapper
+assertion_line: 55
+expression: knative_spec
 ---
-KnativeSpecWrapper(
-    KnativeSpec {
-        group: "serving.knative.dev",
-        version: "v1",
-        kind: "Service",
-        container_name: "my-coder",
-        svc_image: "hzgood/my-coder",
-        port: "8080",
-        env: "",
-    },
-)
+KnativeSpec {
+    group: "serving.knative.dev",
+    version: "v1",
+    kind: "Service",
+    container_name: "my-coder",
+    svc_image: "hzgood/my-coder",
+    port: "8080",
+    env: "",
+}

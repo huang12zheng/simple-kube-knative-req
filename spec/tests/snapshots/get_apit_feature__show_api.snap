@@ -3,7 +3,7 @@ source: spec/tests/get_apit_feature.rs
 assertion_line: 74
 expression: wrapper
 ---
-KnativeSpecWrapper(
+KnativeSpec(
     KnativeSpec {
         group: "serving.knative.dev",
         version: "v1",

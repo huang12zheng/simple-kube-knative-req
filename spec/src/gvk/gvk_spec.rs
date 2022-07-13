@@ -1,15 +1,15 @@
-//! GVKSpec is spec of [GroupVersionKind]
-use envconfig::Envconfig;
-use kube::api::GroupVersionKind;
+// #![doc = include_str!("gvk_spec.md")]
 
-/// GVKSpec is spec of [GroupVersionKind]
+use crate::*;
+
+#[doc = include_str!("gvk_spec.md")]
+#[doc = include_str!("snapshots/kube_do_spec__gvk__gvk_spec__tests__gvk_spec.snap")]
 // !too simple to use #[allow(missing_docs)]
 // !#[doc(alias = "gvk")] for Support search function
 #[doc(alias = "gvk")]
-#[derive(Envconfig, Debug)]
-#[allow(missing_docs)]
+#[derive(Envconfig, Debug, Clone)]
+#[allow(missing_docs)] // too simple
 pub struct GVKSpec {
-    // !pub due to trait [Into]
     #[envconfig(from = "GROUP", default = "serving.knative.dev")]
     pub group: String,
     // ! # 20220711 hz
@@ -23,7 +23,7 @@ pub struct GVKSpec {
     // ! dbg!(gvk);
     // ! ```
     // ! - output
-    // ! ```output
+    // ! ```rust,no_run
     // ! Err(
     // !     EnvVarMissing {
     // !         name: "VERSION",
@@ -36,15 +36,30 @@ pub struct GVKSpec {
     pub kind: String,
 }
 
-/// From [KnativeSpec] into [GVKSpec]
+/// From generic [T] into [GVKSpec], such as [crate::ksvc::KnativeSpec]
+/// Detail are in [crate::ksvc::KnativeSpec::into_gvk]
 pub trait IntoGVKSpec {
     /// From [KnativeSpec] into [GVKSpec]
     fn into_gvk(&self) -> GVKSpec;
 }
 
-impl Into<GroupVersionKind> for GVKSpec {
-    fn into(self) -> GroupVersionKind {
-        let gkv = GroupVersionKind::gvk(&self.group, &self.version, &self.kind);
+impl From<GVKSpec> for GroupVersionKind {
+    fn from(val: GVKSpec) -> Self {
+        let gkv = GroupVersionKind::gvk(&val.group, &val.version, &val.kind);
         gkv
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::gvk::GVKSpec;
+    use envconfig::Envconfig;
+
+    /// [GVKSpec::init_from_env]
+    /// snap would use by doc of [GVKSpec]
+    #[test]
+    fn gvk_spec() {
+        let gvk = GVKSpec::init_from_env().unwrap();
+        insta::assert_debug_snapshot!(gvk);
     }
 }

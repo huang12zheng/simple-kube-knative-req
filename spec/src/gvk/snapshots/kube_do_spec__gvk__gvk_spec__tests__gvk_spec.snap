@@ -1,0 +1,10 @@
+---
+source: spec/src/gvk/gvk_spec.rs
+assertion_line: 64
+expression: gvk
+---
+GVKSpec {
+    group: "serving.knative.dev",
+    version: "v1",
+    kind: "Service",
+}
