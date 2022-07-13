@@ -90,6 +90,8 @@ impl IntoGVKSpec for KnativeSpec {
 #[cfg(test)]
 pub mod test {
 
+    use crate::{GVKSpec, IntoDynamicObject, IntoGVKSpec};
+
     use super::KnativeSpec;
     use envconfig::Envconfig;
 
@@ -113,16 +115,16 @@ pub mod test {
     #[test]
     pub fn show_do() {
         let spec = KnativeSpec::init_from_env().unwrap();
-        // let ksvc = spec.into_do();
-        // insta::assert_debug_snapshot!(ksvc)
+        let ksvc = spec.into_do();
+        insta::assert_debug_snapshot!(ksvc)
     }
 
     /// test [IntoGVKSpec::into_gvk]
     #[test]
     fn ksvc_into_gvk() {
         let ksvc_spec = KnativeSpec::init_from_env().unwrap();
-        // let gvk: GVKSpec = ksvc_spec.into_gvk();
+        let gvk: GVKSpec = ksvc_spec.into_gvk();
 
-        // insta::assert_debug_snapshot!(gvk);
+        insta::assert_debug_snapshot!(gvk);
     }
 }

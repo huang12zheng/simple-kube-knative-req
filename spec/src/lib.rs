@@ -5,7 +5,7 @@
 //!
 //! Detail of Spec:
 //!
-//! - [GVKSpec](gvk::gvk_spec::GVKSpec)
+//! - [GVKSpec](gvk::GVKSpec)
 //! - [KnativeSpec](ksvc)
 //!
 //! # Usage
