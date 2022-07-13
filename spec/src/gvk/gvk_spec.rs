@@ -1,14 +1,11 @@
-// #![doc = include_str!("gvk_spec.md")]
-
 use crate::*;
 
 #[doc = include_str!("gvk_spec.md")]
 #[doc = include_str!("snapshots/kube_do_spec__gvk__gvk_spec__tests__gvk_spec.snap")]
-// !too simple to use #[allow(missing_docs)]
 // !#[doc(alias = "gvk")] for Support search function
 #[doc(alias = "gvk")]
 #[derive(Envconfig, Debug, Clone)]
-#[allow(missing_docs)] // too simple
+#[allow(missing_docs)] // !too simple to use #[allow(missing_docs)]
 pub struct GVKSpec {
     #[envconfig(from = "GROUP", default = "serving.knative.dev")]
     pub group: String,

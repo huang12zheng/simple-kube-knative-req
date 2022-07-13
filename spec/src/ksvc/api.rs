@@ -7,9 +7,6 @@
 //! - [BuilderApi]
 
 use crate::*;
-// use async_trait::async_trait;
-
-// use crate::{GetApi, IntoGVKSpec, KnativeSpec};
 
 #[async_trait]
 impl GetApi for KnativeSpec {

@@ -36,42 +36,6 @@ pub struct KnativeSpec {
     env: String,
 }
 
-// ! impl KnativeSpec {
-// !     /// Returns the gv of this [`KnativeSpec`].
-// !     fn gv(&self) -> String {
-// !         if self.version == "" {
-// !             self.group.clone()
-// !         } else {
-// !             format!("{}/{}", self.group, self.version)
-// !         }
-// !     }
-// !     pub fn ksvc(self) -> anyhow::Result<DynamicObject> {
-// !         let ksvc: DynamicObject = serde_json::from_value(json!({
-// !         "apiVersion": self.gv(),
-// !         "kind": self.kind,
-// !         "metadata": {
-// !             // "name": format!("{}",container_name),
-// !             "name": self.container_name,
-// !         },
-// !         "spec": {
-// !             "template":{
-// !                 "spec": {
-// !                     "containers": [{
-// !                         "ports": [
-// !                             {
-// !                                 "containerPort": self.port
-// !                             }
-// !                         ],
-// !                         "image": self.svc_image,
-// !                         "env": self.env
-// !                     }],
-// !                 }
-// !             }
-// !         }
-// !         }))?;
-// !         Ok(ksvc)
-// !     }
-// ! }
 impl IntoDynamicObject for KnativeSpec {
     /// Returns the gv of this [`KnativeSpec`].
     fn gv(&self) -> String {

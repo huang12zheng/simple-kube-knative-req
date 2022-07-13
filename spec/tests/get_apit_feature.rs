@@ -5,7 +5,6 @@ use async_trait::async_trait;
 use cucumber::{gherkin::Step, given, then, World, WorldInit};
 use envconfig::Envconfig;
 use insta::assert_debug_snapshot;
-// use kube_do_spec::ksvc::ksvc_api::{KnativeSpecIntoApi, KnativeSpec};
 use kube_do_spec::{ksvc::KnativeSpec, GetApi};
 
 #[derive(Debug, WorldInit)]
@@ -45,9 +44,6 @@ fn port_and_image(w: &mut ApiWorld, step: &Step) {
     }
 }
 
-// !error from let wrapper = KnativeSpec(&w.knative_spec.clone());
-// !use let wrapper = &w.knative_wrapper; and World{knative_wrapper: KnativeSpec,}
-
 #[then(expr = "I get api")]
 async fn show_api(w: &mut ApiWorld) {
     let knative_spec = &w.knative_spec;
@@ -68,7 +64,6 @@ mod insta_util {
     }
     pub(crate) use set_snapshot_suffix;
 }
-// #[macro_use]
 
 #[tokio::main]
 async fn main() {

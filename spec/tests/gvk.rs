@@ -29,15 +29,12 @@ mod test1 {
     }
 }
 
-// !fail
 use envconfig::Envconfig;
 use kube::api::GroupVersionKind;
 use kube_do_spec::gvk::GVKSpec;
 use proptest::proptest;
 use serial_test::serial;
 proptest! {
-    // !https://github.com/mitsuhiko/insta/issues/234
-    // !insta is not like assert_eq
     #[test]
     #[serial]
     fn proptest_gvk(g in "\\PC*" ,v in "\\PC*",k in "\\PC*") {
