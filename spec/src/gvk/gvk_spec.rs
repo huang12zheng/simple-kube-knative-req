@@ -1,7 +1,7 @@
 use crate::*;
 /// GVKSpec is spec of [GroupVersionKind]
 /// # Example For Default Data
-/// ```snap
+/// ```snap,no_run
 #[doc = include_str!("snapshots/kube_do_spec__gvk__gvk_spec__tests__gvk_spec.snap")]
 /// ```
 #[doc(alias = "gvk")] // for Support search function in doc

@@ -1,6 +1,5 @@
 ---
 source: spec/src/ksvc/ksvc.rs
-assertion_line: 143
 expression: spec
 ---
 KnativeSpec {

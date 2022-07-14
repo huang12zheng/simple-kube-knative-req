@@ -1,6 +1,5 @@
 ---
 source: spec/tests/get_apit_feature.rs
-assertion_line: 55
 expression: knative_spec
 ---
 KnativeSpec {

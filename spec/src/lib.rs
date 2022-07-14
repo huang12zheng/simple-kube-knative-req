@@ -26,7 +26,7 @@
 //!
 //! - [insta quickstart](https://insta.rs/docs/quickstart/)
 //! - [Youtube Insta 0.16](https://www.youtube.com/watch?v=rCHrMqE4JOY&t=654s)
-//! - run test use `INSTA_UPDATE=1 cargo test`
+//! - run test use `INSTA_UPDATE=1 cargo test --lib`
 //! - gen doc  use `cargo doc -Zunstable-options -Zrustdoc-scrape-examples=all --open --document-private-items`
 
 // #![deny(rustdoc::missing_doc_code_examples)]
@@ -51,7 +51,8 @@ pub use ksvc::*;
 
 /// A trait to get [DynamicObject]
 /// ```snap
-#[doc = include_str!("ksvc/snapshots/kube_do_spec__ksvc__ksvc__show_do.snap")]
+// #[doc = include_str!("ksvc/snapshots/kube_do_spec__ksvc__ksvc__show_do.snap")]
+/// include_str!("ksvc/snapshots/kube_do_spec__ksvc__ksvc__show_do.snap")
 /// ```
 pub trait IntoDynamicObject {
     /// [] into GV::String
@@ -59,3 +60,8 @@ pub trait IntoDynamicObject {
     /// [] into [DynamicObject]
     fn into_do(&self) -> kube::api::DynamicObject;
 }
+
+// #[cfg(test)]
+// fn examples() {
+//     get_default_api()
+// }

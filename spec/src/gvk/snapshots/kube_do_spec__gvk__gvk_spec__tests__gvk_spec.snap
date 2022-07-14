@@ -1,6 +1,5 @@
 ---
 source: spec/src/gvk/gvk_spec.rs
-assertion_line: 64
 expression: gvk
 ---
 GVKSpec {

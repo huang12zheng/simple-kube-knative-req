@@ -1,6 +1,5 @@
 ---
 source: spec/src/gvk/api.rs
-assertion_line: 101
 expression: api
 ---
 Api {

@@ -3,7 +3,7 @@ use crate::*;
 /// A trait to get [Api<DynamicObject>] by [BuilderApi::builder_api]
 #[async_trait]
 trait BuilderApi {
-    /// ```snap
+    /// ```snap, no_run
     #[doc = include_str!("snapshots/kube_do_spec__gvk__api__show_api.snap")]
     /// ```
     ///
@@ -39,8 +39,13 @@ trait BuilderApi {
     ///
     /// Example:
     /// ```
-    /// fn get_ar(&self) -> ApiResource {
-    ///     return ApiResource::from_gvk(&self.get_gvk());
+    /// #[tokio::test]
+    /// async fn show_ar() {
+    ///     use envconfig::Envconfig;
+    ///     let gvk: GroupVersionKind = GVKSpec::init_from_env().unwrap().get_gvk();
+    ///
+    ///     let ar = ApiResource::from_gvk(&gvk);
+    ///     insta::assert_debug_snapshot!(ar);
     /// }
     /// ```
     fn get_gvk(&self) -> GroupVersionKind;
@@ -99,16 +104,6 @@ impl GVKSpec {
 /// ref to [GVKSpec::get_default_api]
 pub async fn get_default_api() -> Api<DynamicObject> {
     return GVKSpec::get_default_api().await;
-}
-
-#[cfg(test)]
-#[tokio::test]
-async fn show_ar() {
-    use envconfig::Envconfig;
-    let gvk: GroupVersionKind = GVKSpec::init_from_env().unwrap().into();
-
-    let ar = ApiResource::from_gvk(&gvk);
-    insta::assert_debug_snapshot!(ar);
 }
 
 #[cfg(test)]

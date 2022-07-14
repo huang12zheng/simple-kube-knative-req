@@ -1,6 +1,5 @@
 ---
 source: spec/src/ksvc/api.rs
-assertion_line: 33
 expression: api
 ---
 Api {
