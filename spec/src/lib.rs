@@ -3,10 +3,13 @@
 //! - This crate provides a number of schema
 //! - The schema would get data from env by [envconfig](envconfig)
 //!
-//! Detail of Spec:
+//! Detail of Content:
 //!
-//! - [GVKSpec](gvk::GVKSpec)
-//! - [KnativeSpec](ksvc)
+//! - [GVKSpec]
+//! - [KnativeSpec]
+//! - [GetApi]
+//! - [BuilderApi]
+//! - [IntoDynamicObject]
 //!
 //! # Usage
 //!
@@ -17,15 +20,18 @@
 //! ```
 //! # Example
 //!
-//! - [get_default_api](gvk::api::GVKSpecWrapper::get_default_api)
+//! - [get_default_api](get_default_api)
 //!
 //! # LOOK ALSO
 //!
 //! - [insta quickstart](https://insta.rs/docs/quickstart/)
 //! - [Youtube Insta 0.16](https://www.youtube.com/watch?v=rCHrMqE4JOY&t=654s)
+//! - run test use `INSTA_UPDATE=1 cargo test`
+//! - gen doc  use `cargo doc -Zunstable-options -Zrustdoc-scrape-examples=all --open --document-private-items`
 
-#![deny(rustdoc::missing_doc_code_examples)]
+// #![deny(rustdoc::missing_doc_code_examples)]
 #![warn(missing_docs)]
+// #![feature(doc_cfg)]
 
 #[macro_use]
 extern crate educe;
@@ -43,6 +49,10 @@ pub use gvk::*;
 pub mod ksvc;
 pub use ksvc::*;
 
+/// A trait to get [DynamicObject]
+/// ```snap
+#[doc = include_str!("ksvc/snapshots/kube_do_spec__ksvc__ksvc__show_do.snap")]
+/// ```
 trait IntoDynamicObject {
     fn gv(&self) -> String;
     fn into_do(&self) -> kube::api::DynamicObject;

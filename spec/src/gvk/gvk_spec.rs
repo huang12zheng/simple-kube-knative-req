@@ -1,34 +1,19 @@
 use crate::*;
-
-#[doc = include_str!("gvk_spec.md")]
+/// GVKSpec is spec of [GroupVersionKind]
+/// # Example For Default Data
+/// ```snap
 #[doc = include_str!("snapshots/kube_do_spec__gvk__gvk_spec__tests__gvk_spec.snap")]
-// !#[doc(alias = "gvk")] for Support search function
-#[doc(alias = "gvk")]
+/// ```
+#[doc(alias = "gvk")] // for Support search function in doc
 #[derive(Envconfig, Debug, Clone)]
-#[allow(missing_docs)] // !too simple to use #[allow(missing_docs)]
 pub struct GVKSpec {
+    /// source from [GroupVersionKind::group]
     #[envconfig(from = "GROUP", default = "serving.knative.dev")]
     pub group: String,
-    // ! # 20220711 hz
-    // ! use `#[envconfig(from = "VERSION")]` would get error:
-    // ! - source
-    // ! ```
-    // ! use envconfig::Envconfig;
-    // ! use kube_do_spec::gvk::GVKSpec;
-    // !
-    // ! let gvk = GVKSpec::init_from_env();
-    // ! dbg!(gvk);
-    // ! ```
-    // ! - output
-    // ! ```rust,no_run
-    // ! Err(
-    // !     EnvVarMissing {
-    // !         name: "VERSION",
-    // !     },
-    // ! )
-    // ! ```
+    /// source from [GroupVersionKind::version]
     #[envconfig(from = "VERSION", default = "v1")]
     pub version: String,
+    /// source from [GroupVersionKind::kind]
     #[envconfig(from = "KIND", default = "Service")]
     pub kind: String,
 }

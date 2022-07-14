@@ -1,53 +1,83 @@
-#![doc = include_str!("api.md")]
-
 use crate::*;
 
-/// newtype wrapper for [KnativeSpec]
+/// A trait to get [Api<DynamicObject>] by [BuilderApi::builder_api]
 #[async_trait]
-/// trait for [KnativeSpec] to get [Api]
 trait BuilderApi {
-    /// merge [Client] and [ApiResource] into [Api]
+    /// ```snap
+    #[doc = include_str!("snapshots/kube_do_spec__gvk__api__show_api.snap")]
+    /// ```
     ///
-    /// Usually, use data from [GVKSpecWrapper]. Such example as [GVKSpecWrapper::get_api].
-    async fn builder_api(&self) -> Api<DynamicObject>;
-    /// Get [ApiResource] from [GroupVersionKind]
-    fn get_ar(&self) -> ApiResource;
-
-    /// Get [Client] from [CLIENT]
-    async fn get_client(&self) -> &'async_trait Client {
-        return CLIENT.get().await;
-    }
-    /// Get [GroupVersionKind] from [GVKSpec] with trait [IntoGVKSpec]
-    fn get_gvk(&self) -> GroupVersionKind;
-}
-
-/// A example ref to [BuilderApi]
-#[async_trait]
-pub trait GetApi {
-    /// A example ref to [BuilderApi::builder_api]
-    async fn get_api(&self) -> Api<DynamicObject>;
-}
-
-#[async_trait]
-impl GetApi for GVKSpec {
-    async fn get_api(&self) -> Api<DynamicObject> {
-        self.builder_api().await
-    }
-}
-
-#[async_trait]
-impl BuilderApi for GVKSpec {
+    /// [] with [BuilderApi::get_ar] and [BuilderApi::get_client] into [Client] and [ApiResource]
+    ///
+    /// [Client] and [ApiResource] with [Api::<DynamicObject>::default_namespaced_with] into [Api<DynamicObject>]
+    ///
+    /// `let api = Api::<DynamicObject>::default_namespaced_with(client, &ar);`
     async fn builder_api(&self) -> Api<DynamicObject> {
         let client = self.get_client().await.clone();
         let ar = self.get_ar();
         let api = Api::<DynamicObject>::default_namespaced_with(client, &ar);
         api
     }
-
+    /// ```snap
+    #[doc = include_str!("snapshots/kube_do_spec__gvk__api__show_ar.snap")]
+    /// ```
+    /// [] with [BuilderApi::get_gvk] into [GroupVersionKind]
+    /// [GroupVersionKind] with [ApiResource::from_gvk] into [ApiResource]
     fn get_ar(&self) -> ApiResource {
         return ApiResource::from_gvk(&self.get_gvk());
     }
 
+    /// [] with [get_client] into [Client]
+    async fn get_client(&self) -> &'async_trait Client {
+        return get_client().await;
+    }
+    // ! not use ` [] with [] into [GroupVersionKind]` due to it isn't in implementation
+    /// ```snap
+    #[doc = include_str!("snapshots/kube_do_spec__gvk__gvk_spec__tests__gvk_spec.snap")]
+    /// ```
+    /// A required method to get GroupVersionKind
+    ///
+    /// Example:
+    /// ```
+    /// fn get_ar(&self) -> ApiResource {
+    ///     return ApiResource::from_gvk(&self.get_gvk());
+    /// }
+    /// ```
+    fn get_gvk(&self) -> GroupVersionKind;
+}
+
+/// A trait to get [Api<DynamicObject>]
+#[async_trait]
+pub trait GetApi {
+    /// A required method to get [Api<DynamicObject>].
+    // ! you can click `get_api` to look implementation for more info.
+    ///
+    /// ```snap
+    #[doc = include_str!("snapshots/kube_do_spec__gvk__api__show_api.snap")]
+    /// ```
+    /// Example:
+    /// ```
+    /// #[tokio::test]
+    /// async fn show_api() {
+    ///     let spec = KnativeSpec::default();
+    ///     let api = spec.get_api().await;
+    ///     insta::assert_debug_snapshot!(api);
+    /// }
+    /// ```
+    async fn get_api(&self) -> Api<DynamicObject>;
+}
+
+/// [GVKSpec] with [BuilderApi] into [Api<DynamicObject>]
+/// - `self.builder_api().await`
+#[async_trait]
+impl GetApi for GVKSpec {
+    async fn get_api(&self) -> Api<DynamicObject> {
+        self.builder_api().await
+    }
+}
+/// [GVKSpec] with [From<GVKSpec>] into [GroupVersionKind]
+/// - `let gvk: GroupVersionKind = self.clone().into();`
+impl BuilderApi for GVKSpec {
     fn get_gvk(&self) -> GroupVersionKind {
         let gvk: GroupVersionKind = self.clone().into();
         gvk
@@ -56,10 +86,9 @@ impl BuilderApi for GVKSpec {
 
 impl GVKSpec {
     /// Associated function [get_default_api] use data from [Envconfig]
-    /// From this point of view, it's different with [GVKSpecWrapper::get_api]
-    #[doc = include_str!("api.md")]
+    /// From this point of view, it's different with [GVKSpec::get_api]
     async fn get_default_api() -> Api<DynamicObject> {
-        let client: Client = CLIENT.get().await.clone();
+        let client: Client = get_client().await.clone();
         let gvk: GroupVersionKind = GVKSpec::init_from_env().unwrap().into();
         let ar = ApiResource::from_gvk(&gvk);
         let api = Api::<DynamicObject>::default_namespaced_with(client, &ar);

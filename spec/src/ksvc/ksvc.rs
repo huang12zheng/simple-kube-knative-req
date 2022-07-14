@@ -35,7 +35,15 @@ pub struct KnativeSpec {
     #[educe(Default = "")]
     env: String,
 }
-
+/// [IntoDynamicObject::gv]
+///
+/// [KnativeSpec] with [] into GV::String
+/// - `format!("{}/{}", self.group, self.version)`
+///
+/// [IntoDynamicObject::into_do]
+///
+/// [KnativeSpec] with [] into [DynamicObject]
+/// - `serde_json::from_value(json!(`
 impl IntoDynamicObject for KnativeSpec {
     /// Returns the gv of this [`KnativeSpec`].
     fn gv(&self) -> String {
@@ -76,7 +84,9 @@ impl IntoDynamicObject for KnativeSpec {
     }
 }
 
-/// Look more by [IntoGVKSpec]
+/// [KnativeSpec] with [] into [GVKSpec]
+///
+/// - ` GVKSpec {...}`
 impl IntoGVKSpec for KnativeSpec {
     fn into_gvk(&self) -> GVKSpec {
         GVKSpec {
