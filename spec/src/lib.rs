@@ -53,7 +53,9 @@ pub use ksvc::*;
 /// ```snap
 #[doc = include_str!("ksvc/snapshots/kube_do_spec__ksvc__ksvc__show_do.snap")]
 /// ```
-trait IntoDynamicObject {
+pub trait IntoDynamicObject {
+    /// [] into GV::String
     fn gv(&self) -> String;
+    /// [] into [DynamicObject]
     fn into_do(&self) -> kube::api::DynamicObject;
 }

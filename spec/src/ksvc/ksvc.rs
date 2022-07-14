@@ -45,7 +45,6 @@ pub struct KnativeSpec {
 /// [KnativeSpec] with [] into [DynamicObject]
 /// - `serde_json::from_value(json!(`
 impl IntoDynamicObject for KnativeSpec {
-    /// Returns the gv of this [`KnativeSpec`].
     fn gv(&self) -> String {
         if self.version == "" {
             self.group.clone()
