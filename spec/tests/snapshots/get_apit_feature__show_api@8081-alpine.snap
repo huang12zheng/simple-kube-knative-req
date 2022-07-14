@@ -9,5 +9,5 @@ KnativeSpec {
     container_name: "my-coder",
     svc_image: "alpine",
     port: "8081",
-    env: "",
+    env: "[{\"name\":\"TZ\",\"value\":\"Asia/Shanghai\"},{\"name\":\"PASSWORD\",\"value\":\"password\"}]",
 }

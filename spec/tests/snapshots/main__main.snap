@@ -1,0 +1,167 @@
+---
+source: spec/tests/main.rs
+expression: _r
+---
+DynamicObject {
+    types: Some(
+        TypeMeta {
+            api_version: "serving.knative.dev/v1",
+            kind: "Service",
+        },
+    ),
+    metadata: ObjectMeta {
+        annotations: Some(
+            {
+                "serving.knative.dev/creator": "admin",
+                "serving.knative.dev/lastModifier": "admin",
+            },
+        ),
+        cluster_name: None,
+        creation_timestamp: Some(
+            Time(
+                2022-07-14T17:28:19Z,
+            ),
+        ),
+        deletion_grace_period_seconds: None,
+        deletion_timestamp: None,
+        finalizers: None,
+        generate_name: None,
+        generation: Some(
+            1,
+        ),
+        labels: None,
+        managed_fields: Some(
+            [
+                ManagedFieldsEntry {
+                    api_version: Some(
+                        "serving.knative.dev/v1",
+                    ),
+                    fields_type: Some(
+                        "FieldsV1",
+                    ),
+                    fields_v1: Some(
+                        FieldsV1(
+                            Object({
+                                "f:spec": Object({
+                                    ".": Object({}),
+                                    "f:template": Object({
+                                        ".": Object({}),
+                                        "f:spec": Object({
+                                            ".": Object({}),
+                                            "f:containers": Object({}),
+                                        }),
+                                    }),
+                                }),
+                            }),
+                        ),
+                    ),
+                    manager: Some(
+                        "unknown",
+                    ),
+                    operation: Some(
+                        "Update",
+                    ),
+                    subresource: None,
+                    time: Some(
+                        Time(
+                            2022-07-14T17:28:19Z,
+                        ),
+                    ),
+                },
+            ],
+        ),
+        name: Some(
+            "my-coder",
+        ),
+        namespace: Some(
+            "default",
+        ),
+        owner_references: None,
+        resource_version: Some(
+            "7034680",
+        ),
+        self_link: None,
+        uid: Some(
+            "35496939-5d50-4cf7-9a2b-84c83d2d2e98",
+        ),
+    },
+    data: Object({
+        "spec": Object({
+            "template": Object({
+                "metadata": Object({
+                    "creationTimestamp": Null,
+                }),
+                "spec": Object({
+                    "containerConcurrency": Number(
+                        0,
+                    ),
+                    "containers": Array([
+                        Object({
+                            "env": Array([
+                                Object({
+                                    "name": String(
+                                        "TZ",
+                                    ),
+                                    "value": String(
+                                        "Asia/Shanghai",
+                                    ),
+                                }),
+                                Object({
+                                    "name": String(
+                                        "PASSWORD",
+                                    ),
+                                    "value": String(
+                                        "password",
+                                    ),
+                                }),
+                            ]),
+                            "image": String(
+                                "hzgood/my-coder",
+                            ),
+                            "name": String(
+                                "user-container",
+                            ),
+                            "ports": Array([
+                                Object({
+                                    "containerPort": Number(
+                                        8080,
+                                    ),
+                                    "protocol": String(
+                                        "TCP",
+                                    ),
+                                }),
+                            ]),
+                            "readinessProbe": Object({
+                                "successThreshold": Number(
+                                    1,
+                                ),
+                                "tcpSocket": Object({
+                                    "port": Number(
+                                        0,
+                                    ),
+                                }),
+                            }),
+                            "resources": Object({}),
+                        }),
+                    ]),
+                    "enableServiceLinks": Bool(
+                        false,
+                    ),
+                    "timeoutSeconds": Number(
+                        300,
+                    ),
+                }),
+            }),
+            "traffic": Array([
+                Object({
+                    "latestRevision": Bool(
+                        true,
+                    ),
+                    "percent": Number(
+                        100,
+                    ),
+                }),
+            ]),
+        }),
+    }),
+}

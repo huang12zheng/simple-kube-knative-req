@@ -42,7 +42,7 @@ use kube::{
 
 use async_trait::async_trait;
 use envconfig::Envconfig;
-use serde_json::json;
+use serde_json::{json, Value};
 
 pub mod gvk;
 pub use gvk::*;
@@ -60,8 +60,3 @@ pub trait IntoDynamicObject {
     /// [] into [DynamicObject]
     fn into_do(&self) -> kube::api::DynamicObject;
 }
-
-// #[cfg(test)]
-// fn examples() {
-//     get_default_api()
-// }

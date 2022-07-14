@@ -4,6 +4,7 @@
 //! - [IntoDynamicObject::gv] to get String like "serving.knative.dev/v1"
 //! - [IntoGVKSpec] into [GVKSpec] with clone
 use crate::*;
+// static env_const:String = "[{\"name\":\"TZ\",\"value\":\"Asia/Shanghai\"},{\"name\":\"PASSWORD\",\"value\":\"password\"}]".to_owned();
 
 /// [struct@KnativeSpec] is all spec from knative service yaml
 #[derive(Educe)]
@@ -31,8 +32,13 @@ pub struct KnativeSpec {
     #[envconfig(from = "PORT", default = "8080")]
     #[educe(Default = "8080")]
     port: String,
-    #[envconfig(from = "ENV", default = "")]
-    #[educe(Default = "")]
+    #[envconfig(
+        from = "ENV",
+        default = "[{\"name\":\"TZ\",\"value\":\"Asia/Shanghai\"},{\"name\":\"PASSWORD\",\"value\":\"password\"}]"
+    )]
+    #[educe(
+        Default = "[{\"name\":\"TZ\",\"value\":\"Asia/Shanghai\"},{\"name\":\"PASSWORD\",\"value\":\"password\"}]"
+    )]
     env: String,
 }
 /// [IntoDynamicObject::gv]
@@ -53,6 +59,7 @@ impl IntoDynamicObject for KnativeSpec {
         }
     }
     fn into_do(&self) -> DynamicObject {
+        let env: Value = serde_json::from_str(self.env.as_ref()).unwrap();
         let ksvc: DynamicObject = serde_json::from_value(json!({
         "apiVersion": self.gv(),
         "kind": self.kind,
@@ -66,11 +73,11 @@ impl IntoDynamicObject for KnativeSpec {
                     "containers": [{
                         "ports": [
                             {
-                                "containerPort": self.port
+                                "containerPort": self.port.parse::<i32>().unwrap(),
                             }
                         ],
                         "image": self.svc_image,
-                        "env": self.env
+                        "env": env
                     }],
                 }
             }
